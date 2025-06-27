@@ -10,8 +10,9 @@ import Link from "next/link";
 import { toast } from "sonner";
 import FormField from "./FormField";
 import { useRouter } from "next/navigation";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/firebase/client";
+import { signUp, signIn } from "@/lib/actions/auth.action";
 
 const authFormSchema = (type: FormType) => {
   return z.object({
@@ -35,12 +36,13 @@ const AuthForm = ({ type }: { type: FormType }) => {
   });
 
   // 2. Define a submit handler.
-  function async onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       if (type === "sign-up") {
-        const {name, email, password} = values;
+        const {name, email, password} = values; //destructuring values coming from the form
 
-        const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
+        const userCredentials = await createUserWithEmailAndPassword(auth, email, password); //function provided by firebase
+        //above is just authenticating the user, not signing up, auth is from client
 
         const result = await signUp({
           uid: userCredentials.user.uid,
@@ -54,9 +56,20 @@ const AuthForm = ({ type }: { type: FormType }) => {
         }
 
         toast.success('Account created successfully')
-        router.push("/sign-in");
+        router.push("/sign-in"); //redirect to sign in page after signing up successfully
         console.log("SIGN-UP", values);
       } else {
+        const {email, password} = values;
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const idToken = await userCredential.user.getIdToken();
+        if (!idToken){
+          toast.error('Sign in failed')
+          return;
+        }
+
+        await signIn({
+          email, idToken
+        })
         toast.success('Signed in successfully')
         router.push("/");
         console.log("SIGN IN", values);
