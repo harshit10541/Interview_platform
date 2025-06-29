@@ -38,7 +38,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 
 <!-- using ai sdk by vercel which is same for whichever llm we use to integrate -->
-craete assistant that takes interview details from us
+<!-- craete assistant that takes interview details from us
 we'll use vapi workflows, design conversations, guiding the ai on what to ask and how to respond
 1. user initiate call with ai assistant, by vapi calls
 2. assistant ask q
@@ -47,3 +47,5 @@ we'll use vapi workflows, design conversations, guiding the ai on what to ask an
 5. store response in firebase database,
 6. develope the api
 7. use next js route handlers
+8. ignore eslint during build
+9.  -->
