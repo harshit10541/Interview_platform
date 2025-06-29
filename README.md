@@ -34,3 +34,16 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+
+
+<!-- using ai sdk by vercel which is same for whichever llm we use to integrate -->
+craete assistant that takes interview details from us
+we'll use vapi workflows, design conversations, guiding the ai on what to ask and how to respond
+1. user initiate call with ai assistant, by vapi calls
+2. assistant ask q
+3. end call send info to api endpoint
+4. feed to gemini
+5. store response in firebase database,
+6. develope the api
+7. use next js route handlers
